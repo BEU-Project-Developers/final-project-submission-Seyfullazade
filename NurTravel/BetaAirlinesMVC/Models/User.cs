@@ -4,8 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BetaAirlinesMVC.Models
+
+// classs maps to the table named User in DB
 {
-    [Table("Users")]
+	[Table("Users")]
     public class User
     {
         [Key]
