@@ -1,0 +1,100 @@
+﻿
+<style>
+    html, body {
+        height: 100%;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+    }
+
+    main {
+        flex-grow: 1;
+    }
+
+    footer {
+        background-color: #343a40;
+        color: #fff;
+        padding: 20px 0;
+        text-align: center;
+    }
+</style>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css"
+          rel="stylesheet" />
+    <link rel="stylesheet" href="~/assets/css/styles.css" />
+    <title>Web Design Mastery | Flivan</title>
+</head>
+<body>
+    <nav>
+        <div class="nav__logo" style=" margin-right: 150px;">Nur Travels</div>
+        <ul class="nav__links">
+
+
+            @*<a href="@Url.Action("Index", "Airports")" class="nav-link">Airports</a>
+
+            *@
+
+            <li class="link"><a href="@Url.Action("Index", "Home")" class="nav-link">Home</a></li>
+            <li class="link"><a href="@Url.Action("Index", "Bookedflights")" class="nav-link">BookedFlights</a></li>
+            @*<li class="link"><a href="@Url.Action("Index", "Flights")" class="nav-link">Flights</a></li>*@
+            <li class="link" style=" margin-right: 100px;"><a href="@Url.Action("Index", "Contact")" class="nav-link">Contact</a></li>
+            @if (Session != null && Session["id"] != null && Session["pw"] != null)
+            {
+                if ((int)Session["id"] == 1)
+                {
+                    <li class="link"><a href="@Url.Action("Index", "Admin")" class="nav-link">Admin</a></li>
+                }
+
+                <li class="link"><a>@Html.ActionLink("Logout", "Login", "Users", null, new { title = "Logout" })</a></li>
+
+            }
+            else
+            {
+                <li class="link"><a href="@Url.Action("Create", "Users")" class="btn btn-info text-light" role="button" style="color:white;">Sign up</a></li>
+
+                <li class="link"><a href="@Url.Action("Login", "Users")" class="btn btn-info text-light" role="button" style="color:white;">Login</a></li>
+
+            }
+        </ul>
+        
+    </nav>
+
+    @RenderBody()
+
+    <footer class="footer">
+        <div class="section__container footer__container">
+            <div class="footer__col row">
+                <h3>Nur's Airline System</h3>
+                <p>
+                    If you want to see the <a href="https://phasesmoon.com/moonday26December2023.html" style="color:white; font-weight:600; font-style:italic;">Noor of the Moon</a>, choose us.
+                </p>
+                <p>
+                    But be careful, this may cause palpitations.
+                </p>
+            </div>
+        </div>
+        <div class="section__container footer__bar">
+            <p>Copyright © 2023 Web Design Mastery. All rights reserved.</p>
+            <div class="socials">
+                <span><i class="ri-facebook-fill"></i></span>
+                <span><i class="ri-twitter-fill"></i></span>
+                <span><i class="ri-instagram-line"></i></span>
+                <span><i class="ri-youtube-fill"></i></span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+</body>
+</html>

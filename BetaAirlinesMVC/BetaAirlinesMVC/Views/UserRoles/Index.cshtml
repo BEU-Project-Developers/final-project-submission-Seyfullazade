@@ -1,0 +1,85 @@
+﻿@model IEnumerable<BetaAirlinesMVC.Models.UserRole>
+
+@{
+    ViewBag.Title = "User Roles";
+    Layout = "~/Views/Shared/_BetaAirlinesLayout.cshtml";
+}
+
+
+    <style>
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: darkslateblue;
+            color:#fff;
+        }
+
+        /* Button Styles */
+        .buttons a {
+            display: inline-block;
+            margin-right: 10px;
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+            .buttons a:hover {
+                background-color: #0056b3;
+            }
+    </style>
+
+<section class="content flexcolumn">
+   
+    <h2 style=" margin-bottom: 15px;">@ViewBag.Title</h2>
+    <p>
+        @Html.ActionLink("Add New User Role", "Create", null, new { @class = "btn btn-primary" })
+    </p>
+    <table style=" margin-top: 20px;">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Role)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Active)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Role)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Active)
+                </td>
+                <td class="buttons">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                    @Html.ActionLink("Details", "Details", new { id = item.Id })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+</section>

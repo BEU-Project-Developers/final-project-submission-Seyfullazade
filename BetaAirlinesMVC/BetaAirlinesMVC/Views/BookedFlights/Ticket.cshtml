@@ -1,0 +1,153 @@
+﻿@model BetaAirlinesMVC.ViewModel.TicketViewModel
+
+@{
+    ViewBag.Title = "Ticket";
+    Layout = null; // Assuming you want a standalone page without the site layout
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Ticket</title>
+    <link rel="stylesheet" href="~/assets/css/s.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .ticket {
+            background-color: #fff;
+            border: 2px dashed #333;
+            width: 600px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .ticket h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .ticket .section {
+            margin-bottom: 20px;
+        }
+
+        .ticket .section h3 {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        .ticket dl {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .ticket dt, .ticket dd {
+            width: 50%;
+            margin: 0;
+            padding: 5px 0;
+        }
+
+        .ticket dt {
+            font-weight: bold;
+        }
+
+        .ticket dd {
+            text-align: right;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 5px;
+        }
+
+        .button:hover {
+            background-color: #555;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div class="ticket">
+        <h2>Ticket</h2>
+
+        <div class="section">
+            <h3>Flight Details</h3>
+            <dl class="dl-horizontal">
+                <dt>Booking ID</dt>
+                <dd>@Model.BookedFlight.Id</dd>
+
+                <dt>Date Booked</dt>
+                <dd>@Model.BookedFlight.DateBooked.ToString("yyyy-MM-dd")</dd>
+
+                <dt>Departure City</dt>
+                <dd>@Model.DepartureCity</dd>
+
+                <dt>Departure Airport</dt>
+                <dd>@Model.BookedFlight.Flight.DepartureAirport.Name</dd>
+
+                <dt>Arrival City</dt>
+                <dd>@Model.ArrivalCity</dd>
+
+                <dt>Arrival Airport</dt>
+                <dd>@Model.BookedFlight.Flight.ArrivalAirport.Name</dd>
+
+                <dt>Price</dt>
+                <dd>$@Model.BookedFlight.Price</dd>
+            </dl>
+        </div>
+
+        <div class="section">
+            <h3>Flight Information</h3>
+            <dl class="dl-horizontal">
+                <dt>Flight Date</dt>
+                <dd>@Model.BookedFlight.Flight.DepartureDate</dd>
+
+                <!-- Add any additional flight information you need here -->
+            </dl>
+        </div>
+
+        <div class="section">
+            <h3>User Information</h3>
+            <dl class="dl-horizontal">
+                <dt>Username</dt>
+                <dd>@Model.Username</dd>
+
+                <!-- Add any additional user information you need here -->
+            </dl>
+        </div>
+
+        <div class="button-container">
+            <a href="@Url.Action("Index", "BookedFlights")" class="button">Back to Index</a>
+            <a href="javascript:void(0);" onclick="printTicket()" class="button">Print Ticket</a>
+        </div>
+    </div>
+    <script>
+        function printTicket() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

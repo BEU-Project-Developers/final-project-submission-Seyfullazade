@@ -1,0 +1,153 @@
+﻿@model BetaAirlinesMVC.Models.Contact
+
+@{
+    ViewBag.Title = "Message Details";
+    Layout = "~/Views/Shared/_BetaAirlinesLayout.cshtml";
+}
+
+<style>
+    .content {
+        padding: 30px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        max-width: 900px;
+        margin: auto;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        text-align: left;
+        margin-top: 50px;
+    }
+
+        .content h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: #333;
+            text-align: center;
+        }
+
+    .dl-horizontal {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 10px 20px;
+        align-items: center;
+    }
+
+        .dl-horizontal dt {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .dl-horizontal dd {
+            color: #333;
+            margin-left: 0;
+        }
+
+            .dl-horizontal dd.email {
+                word-break: break-word;
+            }
+
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+
+    .form-group {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+        .form-group a {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin: 5px;
+        }
+
+            .form-group a:hover {
+                background-color: #0056b3;
+            }
+
+    .backLink {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+        .backLink a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #6c757d;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin: 5px;
+        }
+
+            .backLink a:hover {
+                background-color: #5a6268;
+            }
+</style>
+
+<section class="content flexcolumn">
+    <h2>@ViewBag.Title</h2>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="email">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Subject)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Subject)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Message)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Message)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Active)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Active)
+        </dd>
+    </dl>
+    <div class="form-group">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ActionLink("Edit Message", "Edit", new { id = Model.Id })
+        }
+    </div>
+    <div class="backLink">
+        @Html.ActionLink("Back to List", "Messages")
+    </div>
+</section>

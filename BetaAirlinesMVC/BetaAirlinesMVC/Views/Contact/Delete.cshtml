@@ -1,0 +1,105 @@
+﻿@model BetaAirlinesMVC.Models.Contact
+
+@{
+    ViewBag.Title = "Delete Message";
+    Layout = "~/Views/Shared/_BetaAirlinesLayout.cshtml";
+}
+
+<section class="content flexcolumn">
+    <h2>@ViewBag.Title</h2>
+    @*<h4>Are you sure you want to delete this?</h4>*@
+    <div class="text-left">
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+
+            <dd class="email">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Subject)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Subject)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Message)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Message)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Date)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Date)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Active)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Active)
+            </dd>
+
+        </dl>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger deleteBtn" />
+        </div>
+    }
+    <div class="backLink">
+        @Html.ActionLink("Back to List", "Messages")
+    </div>
+
+</section>
+
+<style>
+    .content {
+        padding: 20px;
+    }
+    dt{
+        font-weight:700;
+    }
+    .dl-horizontal{
+        display:flex;
+        flex-direction:column;
+        gap:20px;
+    }
+    dd {
+        border-bottom: 1px solid #ddd;
+        width: 40%;
+    }
+
+    .backLink {
+        margin-top: 20px;
+    }
+
+    .deleteBtn {
+        margin-top: 20px;
+        width: 13%;
+        display: block;
+    }
+</style>

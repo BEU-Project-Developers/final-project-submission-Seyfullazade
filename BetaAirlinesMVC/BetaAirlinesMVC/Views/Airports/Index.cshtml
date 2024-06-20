@@ -1,0 +1,245 @@
+﻿@model IEnumerable<BetaAirlinesMVC.Models.Airport>
+
+@{
+    ViewBag.Title = "Airports";
+    Layout = "~/Views/Shared/_BetaAirlinesLayout.cshtml";
+}
+
+<section class="content flexcolumn">
+    <h2>@ViewBag.Title</h2>
+    <p>
+        @Html.ActionLink("Add New Airport", "Create", null, new { @class = "btn btn-primary" })
+    </p>
+    <div class="search-bar">
+        <input type="text" id="searchBox" placeholder="Search airports..." class="search form-control" onkeyup="filterTable()">
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped" id="airportsTable">
+            <thead>
+                <tr>
+                    <th>Name <span class="sort-icon" onclick="sortTable(0)">⇅</span></th>
+                    <th>ICAO <span class="sort-icon" onclick="sortTable(1)">⇅</span></th>
+                    <th>City <span class="sort-icon" onclick="sortTable(2)">⇅</span></th>
+                    <th>State <span class="sort-icon" onclick="sortTable(3)">⇅</span></th>
+                    <th>Country <span class="sort-icon" onclick="sortTable(4)">⇅</span></th>
+                    <th>Active <span class="sort-icon" onclick="sortTable(5)">⇅</span></th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.ICAO)</td>
+                        <td>@Html.DisplayFor(modelItem => item.City)</td>
+                        <td>@Html.DisplayFor(modelItem => item.State)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Country)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Active)</td>
+                        <td class="buttons">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info btn-sm" })
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm", onclick = "return confirm('Are you sure you want to delete this airport?');" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination Controls -->
+    <div class="pagination">
+        @* Implement pagination logic here *@
+    </div>
+</section>
+
+<script>
+    function filterTable() {
+        var input, filter, table, tr, td, i, j, txtValue;
+        input = document.getElementById("searchBox");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("airportsTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 1; i < tr.length; i++) {
+            tr[i].style.display = "none";
+            td = tr[i].getElementsByTagName("td");
+            for (j = 0; j < td.length; j++) {
+                if (td[j]) {
+                    txtValue = td[j].textContent || td[j].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("airportsTable");
+        switching = true;
+        dir = "asc";
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[n];
+                y = rows[i + 1].getElementsByTagName("TD")[n];
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount++;
+            } else {
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+</script>
+
+<style>
+    /* Custom CSS for Airport List */
+    .search-bar {
+        margin: 10px 0;
+    }
+    .search {
+        padding: 10px 20px;
+    }
+    .content {
+        padding: 20px;
+    }
+
+    .search-bar {
+        margin-bottom: 15px;
+    }
+
+    .table th {
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+        position: relative;
+    }
+
+        .table th .sort-icon {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #ccc;
+            transition: color 0.3s;
+        }
+
+            .table th .sort-icon:hover {
+                color: #333;
+            }
+
+        .table th:hover .sort-icon {
+            color: #333;
+        }
+
+    .buttons a {
+        margin-right: 5px;
+    }
+
+    .table-responsive {
+        margin-top: 20px;
+    }
+
+    .table {
+        width: 100%;
+        margin-bottom: 20px;
+        border-collapse: collapse;
+    }
+
+        .table th, .table td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .btn {
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        color: #fff;
+        text-decoration: none;
+        display: inline-block;
+        transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-info {
+        background-color: #17a2b8;
+    }
+
+        .btn-info:hover {
+            background-color: #117a8b;
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+    .pagination {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        padding: 0;
+    }
+
+        .pagination li {
+            display: inline;
+            margin: 0 5px;
+        }
+
+            .pagination li a {
+                color: #007bff;
+                text-decoration: none;
+                padding: 8px 12px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                transition: background-color 0.3s, border-color 0.3s;
+            }
+
+                .pagination li a:hover {
+                    background-color: #007bff;
+                    color: #fff;
+                    border-color: #007bff;
+                }
+</style>

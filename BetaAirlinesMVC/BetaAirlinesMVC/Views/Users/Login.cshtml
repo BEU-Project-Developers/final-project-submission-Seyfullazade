@@ -1,0 +1,115 @@
+﻿@model BetaAirlinesMVC.ViewModel.UserLoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_BetaAirlinesLayout.cshtml";
+}
+<section class="login-section" style="background-image: url(https://img.freepik.com/free-photo/top-view-small-plane-with-copy-space_23-2148580907.jpg?t=st=1718433019~exp=1718436619~hmac=5131472…&w=1380); background-size: cover;">
+    <h1 class="text-light mt-5 visually-hidden">Login</h1>
+    @using (Html.BeginForm("Login", "Users", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "login-form" }))
+    {
+        @Html.AntiForgeryToken()
+        <h3 class="text-primary text-center">Login Page</h3>
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group text-danger text-center">@ViewBag.Message</div>
+
+            <div class="form-group text-center">
+                <input type="submit" value="Login" class="btn btn-primary btn-block" />
+            </div>
+        </div>
+    }
+    <h1 class="text-light mt-3 visually-hidden">Login</h1>
+</section>
+<style>
+    body {
+        background-image: url('https://example.com/your-image.jpg');
+    }
+</style>
+<style>
+    /* Custom CSS for login form */
+    .login-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+        background-color: #f4f4f4;
+        padding: 20px;
+    }
+
+    .login-form {
+        width: 100%;
+        max-width: 500px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .login-form h3 {
+            margin-bottom: 20px;
+        }
+
+    .form-horizontal .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-horizontal .control-label {
+        padding-top: 7px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            outline: none;
+        }
+
+    .btn-primary {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+        width: 100%;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .text-danger {
+        color: #dc3545;
+    }
+
+    .visually-hidden {
+        visibility: hidden;
+    }
+</style>

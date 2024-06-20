@@ -1,0 +1,69 @@
+﻿@model BetaAirlinesMVC.Models.Flight
+
+@{
+    ViewBag.Title = "Delete Flight";
+    Layout = "~/Views/Shared/_BetaAirlinesLayout.cshtml";
+}
+
+<section class="content flexcolumn">
+    <h2>@ViewBag.Title</h2>
+    <h4>Are you sure you want to delete this?</h4>
+    <div class="text-left">
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.ArrivalAirport.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ArrivalAirport.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DepartureAirport.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DepartureAirport.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DepartureDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DepartureDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.FlightLengthInMinutes)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FlightLengthInMinutes)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Active)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Active)
+            </dd>
+
+        </dl>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" />
+        </div>
+    }
+    <div class="backLink">
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+</section>

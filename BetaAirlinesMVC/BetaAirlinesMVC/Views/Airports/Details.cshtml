@@ -1,0 +1,93 @@
+﻿@model BetaAirlinesMVC.Models.Airport
+
+@{
+    ViewBag.Title = "Airport Details";
+    Layout = "~/Views/Shared/_BetaAirlinesLayout.cshtml";
+}
+
+<style>
+    .content {
+        padding: 20px;
+    }
+
+    .details-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+        .details-table th {
+            background-color: #f2f2f2;
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .details-table td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+    .action-buttons {
+        margin-top: 10px;
+    }
+
+    .btn-action {
+        margin-right: 10px;
+    }
+
+    .backLink {
+        margin-top: 20px;
+    }
+    .detailBtn{
+        margin-bottom:50px;
+        width:13%;
+        display:block;
+    }
+</style>
+
+<section class="content flexcolumn">
+    <h2>@ViewBag.Title</h2>
+
+    <div class="text-left">
+        <hr />
+        <table class="details-table">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Name)</th>
+                <td>@Html.DisplayFor(model => model.Name)</td>
+            </tr>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.ICAO)</th>
+                <td>@Html.DisplayFor(model => model.ICAO)</td>
+            </tr>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.City)</th>
+                <td>@Html.DisplayFor(model => model.City)</td>
+            </tr>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.State)</th>
+                <td>@Html.DisplayFor(model => model.State)</td>
+            </tr>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Country)</th>
+                <td>@Html.DisplayFor(model => model.Country)</td>
+            </tr>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Active)</th>
+                
+            </tr>
+        </table>
+    </div>
+
+    <div class="action-buttons">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ActionLink("Edit Airport", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary btn-action detailBtn" })
+        }
+    </div>
+
+    <div class="backLink">
+        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default btn-action" })
+    </div>
+</section>

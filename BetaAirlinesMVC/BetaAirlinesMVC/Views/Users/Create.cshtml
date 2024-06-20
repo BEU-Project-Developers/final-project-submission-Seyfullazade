@@ -1,0 +1,177 @@
+﻿@model BetaAirlinesMVC.ViewModel.UserCreateViewModel
+
+@{
+    Layout = "~/Views/Shared/_BetaAirlinesLayout.cshtml";
+}
+
+<section class="content flexcolumn" style=" background-image: url(https://img.freepik.com/free-photo/small-toy-plane-wood_23-2148109178.jpg?w=1060&t=st=1718436419~exp=1718437019~hmac=d130596…); background-repeat: no-repeat; background-size: cover;">
+    <h2>@ViewBag.Title</h2>
+
+    @using (Html.BeginForm("Create", "Users", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "forms" }))
+    {
+        @Html.AntiForgeryToken()
+        <h3 class="text-primary text-center" style=" margin: 20px 200px;">Register Page</h3>
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label" })
+                <div class="formInputDiv">
+                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label" })
+                <div class="formInputDiv">
+                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label" })
+                <div class="formInputDiv">
+                    @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                    <span class="text-danger">@ViewBag.Message</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
+                <div class="formInputDiv">
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label" })
+                <div class="formInputDiv">
+                    @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RegisteredDate, htmlAttributes: new { @class = "control-label" })
+                <div class="formInputDiv">
+                    @Html.EditorFor(model => model.RegisteredDate, new { htmlAttributes = new { @class = "form-control", @type = "date", @disabled = "disabled" } })
+                    @Html.ValidationMessageFor(model => model.RegisteredDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group d-none">
+                @Html.LabelFor(model => model.Active, htmlAttributes: new { @class = "control-label" })
+                <div class="formInputDiv">
+                    @Html.DropDownListFor(model => model.Active, new[] { new SelectListItem { Text = "True (1)", Value = "1" }, new SelectListItem { Text = "False (0)", Value = "0" } }, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Active, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group d-none">
+                @Html.LabelFor(model => model.UserRoleID, "User Role", htmlAttributes: new { @class = "control-label" })
+                <div class="formInputDiv">
+                    @{
+                        // Define the list of roles
+                        var userRoleList = ViewBag.UserRoleList as SelectList;
+                        // Set the default role
+                        var defaultRole = "User";
+                    }
+                    @Html.DropDownList("UserRoleID", userRoleList, defaultRole, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.UserRoleID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    <input type="submit" value="Add User" class="btn btn-warning linkDark" />
+                </div>
+            </div>
+        </div>
+    }
+</section>
+
+<style>
+    /* Ensure the form takes full width on smaller screens */
+/* Form container styling */
+    form.forms {
+        width: 600px;
+        margin-top: 15px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+/* General layout and typography */
+.flexcolumn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Form group spacing and layout */
+.form-horizontal .form-group {
+    margin-bottom: 15px;
+}
+
+.control-label {
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.formInputDiv {
+    display: flex;
+    flex-direction: column;
+}
+
+.formInputDiv .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Error message styling */
+.text-danger {
+    color: #e74c3c;
+    margin-top: 5px;
+}
+
+/* Submit button styling */
+input[type="submit"].btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #ffc107;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"].btn:hover {
+    background-color: #e0a800;
+}
+
+/* Responsive adjustments */
+
+/* Hide elements with d-none class */
+.d-none {
+    display: none;
+}
+
+</style>

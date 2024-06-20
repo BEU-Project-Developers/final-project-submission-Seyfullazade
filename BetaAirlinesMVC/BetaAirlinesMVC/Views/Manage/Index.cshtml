@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "Manage: Main";
+    Layout = "~/Views/Shared/_BetaAirlinesLayout.cshtml";
+}
+
+<section class="content flexcolumn">
+    <h2>@ViewBag.Title</h2>
+    <ul class="nav-list">
+        <li>@Html.ActionLink("Users", "Index", "Users", null, new { title = "Users" })</li>
+        <hr />
+        <li>@Html.ActionLink("Flights", "Index", "Flights", null, new { title = "Flights" })</li>
+        <li>@Html.ActionLink("Booked Flights", "Admin", "BookedFlights", null, new { title = "Booked Flights" })</li>
+        <hr />
+        <li>@Html.ActionLink("Book a Flight", "BookAFlight", "Flights", null, new { title = "Book a Flight" })</li>
+        <hr />
+        <li>@Html.ActionLink("Contact Us Messages", "Messages", "Contact", null, new { title = "Contact Us Messages" })</li>
+    </ul>
+</section>
+
+
+<style>
+    /* Custom CSS for Navigation */
+    .content {
+        padding: 20px;
+    }
+
+    .nav-list {
+        list-style-type: none;
+        padding: 0;
+    }
+
+        .nav-list li {
+            margin-bottom: 10px;
+        }
+
+            .nav-list li a {
+                text-decoration: none;
+                color: #333;
+                font-size: 18px;
+                transition: color 0.3s ease;
+            }
+
+                .nav-list li a:hover {
+                    color: #007bff;
+                }
+
+        .nav-list hr {
+            border: none;
+            border-top: 1px solid #ddd;
+            margin: 10px 0;
+        }
+
+</style>
+

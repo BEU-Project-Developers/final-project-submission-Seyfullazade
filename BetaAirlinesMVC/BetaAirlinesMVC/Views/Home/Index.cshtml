@@ -1,0 +1,648 @@
+﻿<!--@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_BetaAirlinesLayout.cshtml";
+}
+
+@model List<BetaAirlinesMVC.Models.Flight>
+
+<header class="section__container header__container">
+    <h1 class="section__header">Find And Book<br />A Great Experience</h1>
+    <img src="~/assets/header.jpg" alt="header" />
+</header>
+
+
+<section class="section__container booking__container">
+    @if (Model.Count > 0)
+    {
+        <div class="table-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Departure Airport</th>
+                        <th>Departure City</th>
+                        <th>Arrival Airport</th>
+                        <th>Arrival City</th>
+                        <th>Departure Date</th>
+                        <th>Flight Duration</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.DepartureAirport.Name</td>
+                            <td>@item.DepartureAirport.City</td>
+                            <td>@item.ArrivalAirport.Name</td>
+                            <td>@item.ArrivalAirport.City</td>
+                            <td>@item.DepartureDate.ToString("yyyy-MM-dd")</td>
+                            <td>@item.FlightLengthInMinutes minutes</td>
+                            <td>@item.Price</td>
+                            <td>
+                                @using (Html.BeginForm("Create", "BookedFlights", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <input style="display:none;" type="hidden" value="@ViewBag.UserID" name="usr" />
+                                    <input style="display:none;" type="hidden" value="@item.Id" name="fid" />
+                                    <input style="display:none;" type="hidden" value="@item.Price" name="price" />
+                                    <button type="submit" class="btn btn-success">Book Flight</button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <p>No flights found.</p>
+    }
+</section>
+
+<style>
+    /* Custom CSS for the search form and results table */
+    .section__container {
+        padding: 20px;
+        background-color: #ffffff; /* White background for clarity */
+        border-radius: 10px; /* Smooth rounded corners */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Slightly more prominent shadow */
+        max-width: 1200px; /* Limit the maximum width */
+        margin: 0 auto; /* Center align */
+    }
+
+    .form__group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        gap: 15px; /* More spacing for better clarity */
+    }
+
+    .input__content {
+        flex-grow: 1; /* Ensure input takes available space */
+    }
+
+    .input__group {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .booking__container form{
+        margin:auto;
+        display:flex;
+    }
+
+    .section__container{
+        background-color: transparent;
+    }
+
+    .booking__container .btn {
+        padding: 1rem;
+        font-size: 1rem;
+    }
+    .input__group input {
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+    }
+
+            .input__group input:focus {
+                border-color: #007bff;
+            }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s ease, transform 0.2s;
+    }
+
+        .btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05); /* Slightly enlarge on hover */
+        }
+
+    .table-container {
+        margin-top: 20px;
+        overflow-x: auto;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+        .table th, .table td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #007bff;
+            color: white;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 0.05rem;
+            border-right: 1px solid #ffffff;
+        }
+
+            .table th:last-child {
+                border-right: none;
+            }
+
+        .table td {
+            background-color: #ffffff;
+            border-bottom: 1px solid #dee2e6;
+            border-right: 1px solid #dee2e6;
+            text-align:center;
+        }
+
+            .table td:last-child {
+                border-right: none;
+            }
+
+        .table tr:nth-child(even) td {
+            background-color: #f9f9f9;
+        }
+
+        .table tr:hover td {
+            background-color: #f1f1f1;
+        }
+
+    .booking__container .form__group span {
+        background-color: transparent;
+    }
+
+    p {
+        font-size: 1.1rem; /* Slightly larger font size for better readability */
+        color: #333; /* Darker color for contrast */
+        text-align: center;
+    }
+</style>
+
+
+
+
+<section class="section__container plan__container">
+    <p class="subheader">TRAVEL SUPPORT</p>
+    <h2 class="section__header">Plan your travel with confidence</h2>
+    <p class="description">
+        Find help with your bookings and travel plans, and seee what to expect
+        along your journey.
+    </p>
+    <div class="plan__grid">
+        <div class="plan__content">
+            <span class="number">01</span>
+            <h4>Travel Requirements for Dubai</h4>
+            <p>
+                Stay informed and prepared for your trip to Dubai with essential
+                travel requirements, ensuring a smooth and hassle-free experience in
+                this vibrant and captivating city.
+            </p>
+            <span class="number">02</span>
+            <h4>Multi-risk travel insurance</h4>
+            <p>
+                Comprehensive protection for your peace of mind, covering a range of
+                potential travel risks and unexpected situations.
+            </p>
+            <span class="number">03</span>
+            <h4>Travel Requirements by destinations</h4>
+            <p>
+                Stay informed and plan your trip with ease, as we provide up-to-date
+                information on travel requirements specific to your desired
+                destinations.
+            </p>
+        </div>
+        <div class="plan__image">
+            <img src="assets/plan-1.jpg" alt="plan" />
+            <img src="assets/plan-2.jpg" alt="plan" />
+            <img src="assets/plan-3.jpg" alt="plan" />
+        </div>
+    </div>
+</section>
+
+<section class="memories">
+    <div class="section__container memories__container">
+        <div class="memories__header">
+            <h2 class="section__header">
+                Travel to make memories all around the world
+            </h2>
+
+        </div>
+        <div class="memories__grid">
+            <div class="memories__card">
+                <span><i class="ri-calendar-2-line"></i></span>
+                <h4>Book & relax</h4>
+                <p>
+                    With "Book and Relax," you can sit back, unwind, and enjoy the
+                    journey while we take care of everything else.
+                </p>
+            </div>
+            <div class="memories__card">
+                <span><i class="ri-shield-check-line"></i></span>
+                <h4>Smart Checklist</h4>
+                <p>
+                    Introducing Smart Checklist with us, the innovative solution
+                    revolutionizing the way you travel with our airline.
+                </p>
+            </div>
+            <div class="memories__card">
+                <span><i class="ri-bookmark-2-line"></i></span>
+                <h4>Save More</h4>
+                <p>
+                    From discounted ticket prices to exclusive promotions and deals,
+                    we prioritize affordability without compromising on quality.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section__container lounge__container">
+    <div class="lounge__image">
+        <img src="assets/lounge-1.jpg" alt="lounge" />
+        <img src="assets/lounge-2.jpg" alt="lounge" />
+    </div>
+    <div class="lounge__content">
+        <h2 class="section__header">Unaccompanied Minor Lounge</h2>
+        <div class="lounge__grid">
+            <div class="lounge__details">
+                <h4>Experience Tranquility</h4>
+                <p>
+                    Serenity Haven offers a tranquil escape, featuring comfortable
+                    seating, calming ambiance, and attentive service.
+                </p>
+            </div>
+            <div class="lounge__details">
+                <h4>Elevate Your Experience</h4>
+                <p>
+                    Designed for discerning travelers, this exclusive lounge offers
+                    premium amenities, assistance, and private workspaces.
+                </p>
+            </div>
+            <div class="lounge__details">
+                <h4>A Welcoming Space</h4>
+                <p>
+                    Creating a family-friendly atmosphere, The Family Zone is the
+                    perfect haven for parents and children.
+                </p>
+            </div>
+            <div class="lounge__details">
+                <h4>A Culinary Delight</h4>
+                <p>
+                    Immerse yourself in a world of flavors, offering international
+                    cuisines, gourmet dishes, and carefully curated beverages.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section__container travellers__container">
+    <h2 class="section__header">Best travellers of the month</h2>
+    <div class="travellers__grid">
+        <div class="travellers__card">
+            <img src="assets/traveller-1.jpg" alt="traveller" />
+            <div class="travellers__card__content">
+                <img src="assets/client-1.jpg" alt="client" />
+                <h4>Emily Johnson</h4>
+                <p>Dubai</p>
+            </div>
+        </div>
+        <div class="travellers__card">
+            <img src="assets/traveller-2.jpg" alt="traveller" />
+            <div class="travellers__card__content">
+                <img src="assets/client-2.jpg" alt="client" />
+                <h4>David Smith</h4>
+                <p>Paris</p>
+            </div>
+        </div>
+        <div class="travellers__card">
+            <img src="assets/traveller-3.jpg" alt="traveller" />
+            <div class="travellers__card__content">
+                <img src="assets/client-3.jpg" alt="client" />
+                <h4>Olivia Brown</h4>
+                <p>Singapore</p>
+            </div>
+        </div>
+        <div class="travellers__card">
+            <img src="assets/traveller-4.jpg" alt="traveller" />
+            <div class="travellers__card__content">
+                <img src="assets/client-4.jpg" alt="client" />
+                <h4>Daniel Taylor</h4>
+                <p>Malaysia</p>
+            </div>
+        </div>
+    </div>
+</section>-->
+<!-- Start of LiveChat (www.livechat.com) code -->
+<!--<script>
+    window.__lc = window.__lc || {};
+    window.__lc.license = 18131898;
+    window.__lc.integration_name = "manual_channels";
+    window.__lc.product_name = "livechat";
+    ; (function (n, t, c) { function i(n) { return e._h ? e._h.apply(null, n) : e._q.push(n) } var e = { _q: [], _h: null, _v: "2.0", on: function () { i(["on", c.call(arguments)]) }, once: function () { i(["once", c.call(arguments)]) }, off: function () { i(["off", c.call(arguments)]) }, get: function () { if (!e._h) throw new Error("[LiveChatWidget] You can't use getters before load."); return i(["get", c.call(arguments)]) }, call: function () { i(["call", c.call(arguments)]) }, init: function () { var n = t.createElement("script"); n.async = !0, n.type = "text/javascript", n.src = "https://cdn.livechatinc.com/tracking.js", t.head.appendChild(n) } }; !n.__lc.asyncInit && e.init(), n.LiveChatWidget = n.LiveChatWidget || e }(window, document, [].slice))
+</script>
+<noscript><a href="https://www.livechat.com/chat-with/18131898/" rel="nofollow">Chat with us</a>, powered by <a href="https://www.livechat.com/?welcome" rel="noopener nofollow" target="_blank">LiveChat</a></noscript>-->
+<!-- End of LiveChat code -->
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_BetaAirlinesLayout.cshtml";
+}
+
+@*@model List*@<BetaAirlinesMVC.Models.Flight>
+
+<header class="section__container header__container">
+    <h1 class="section__header">Find And Book<br />A Great Experience</h1>
+    <img src="~/assets/header.jpg" alt="header" />
+</header>
+
+<section class="section__container booking__container">
+    @if (Model.Count > 0)
+    {
+        <div class="table-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Departure Airport</th>
+                        <th>Departure City</th>
+                        <th>Arrival Airport</th>
+                        <th>Arrival City</th>
+                        <th>Departure Date</th>
+                        <th>Flight Duration</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.DepartureAirport.Name</td>
+                            <td>@item.DepartureAirport.City</td>
+                            <td>@item.ArrivalAirport.Name</td>
+                            <td>@item.ArrivalAirport.City</td>
+                            <td>@item.DepartureDate.ToString("yyyy-MM-dd")</td>
+                            <td>@item.FlightLengthInMinutes minutes</td>
+                            <td>@item.Price</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <p>No flights found.</p>
+    }
+</section>
+
+<style>
+    /* Custom CSS for the search form and results table */
+    .section__container {
+        padding: 20px;
+        background-color: #ffffff; /* White background for clarity */
+        border-radius: 10px; /* Smooth rounded corners */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Slightly more prominent shadow */
+        max-width: 1200px; /* Limit the maximum width */
+        margin: 0 auto; /* Center align */
+    }
+
+    .table-container {
+        margin-top: 20px;
+        overflow-x: auto;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+        .table th, .table td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #007bff;
+            color: white;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 0.05rem;
+            border-right: 1px solid #ffffff;
+        }
+
+            .table th:last-child {
+                border-right: none;
+            }
+
+        .table td {
+            background-color: #ffffff;
+            border-bottom: 1px solid #dee2e6;
+            border-right: 1px solid #dee2e6;
+            text-align: center;
+        }
+
+            .table td:last-child {
+                border-right: none;
+            }
+
+        .table tr:nth-child(even) td {
+            background-color: #f9f9f9;
+        }
+
+        .table tr:hover td {
+            background-color: #f1f1f1;
+        }
+
+    p {
+        font-size: 1.1rem; /* Slightly larger font size for better readability */
+        color: #333; /* Darker color for contrast */
+        text-align: center;
+    }
+</style>
+
+<section class="section__container plan__container">
+    <p class="subheader">TRAVEL SUPPORT</p>
+    <h2 class="section__header">Plan your travel with confidence</h2>
+    <p class="description">
+        Find help with your bookings and travel plans, and see what to expect
+        along your journey.
+    </p>
+    <div class="plan__grid">
+        <div class="plan__content">
+            <span class="number">01</span>
+            <h4>Travel Requirements for Dubai</h4>
+            <p>
+                Stay informed and prepared for your trip to Dubai with essential
+                travel requirements, ensuring a smooth and hassle-free experience in
+                this vibrant and captivating city.
+            </p>
+            <span class="number">02</span>
+            <h4>Multi-risk travel insurance</h4>
+            <p>
+                Comprehensive protection for your peace of mind, covering a range of
+                potential travel risks and unexpected situations.
+            </p>
+            <span class="number">03</span>
+            <h4>Travel Requirements by destinations</h4>
+            <p>
+                Stay informed and plan your trip with ease, as we provide up-to-date
+                information on travel requirements specific to your desired
+                destinations.
+            </p>
+        </div>
+        <div class="plan__image">
+            <img src="assets/plan-1.jpg" alt="plan" />
+            <img src="assets/plan-2.jpg" alt="plan" />
+            <img src="assets/plan-3.jpg" alt="plan" />
+        </div>
+    </div>
+</section>
+
+<section class="memories">
+    <div class="section__container memories__container">
+        <div class="memories__header">
+            <h2 class="section__header">
+                Travel to make memories all around the world
+            </h2>
+
+        </div>
+        <div class="memories__grid">
+            <div class="memories__card">
+                <span><i class="ri-calendar-2-line"></i></span>
+                <h4>Book & relax</h4>
+                <p>
+                    With "Book and Relax," you can sit back, unwind, and enjoy the
+                    journey while we take care of everything else.
+                </p>
+            </div>
+            <div class="memories__card">
+                <span><i class="ri-shield-check-line"></i></span>
+                <h4>Smart Checklist</h4>
+                <p>
+                    Introducing Smart Checklist with us, the innovative solution
+                    revolutionizing the way you travel with our airline.
+                </p>
+            </div>
+            <div class="memories__card">
+                <span><i class="ri-bookmark-2-line"></i></span>
+                <h4>Save More</h4>
+                <p>
+                    From discounted ticket prices to exclusive promotions and deals,
+                    we prioritize affordability without compromising on quality.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section__container lounge__container">
+    <div class="lounge__image">
+        <img src="assets/lounge-1.jpg" alt="lounge" />
+        <img src="assets/lounge-2.jpg" alt="lounge" />
+    </div>
+    <div class="lounge__content">
+        <h2 class="section__header">Unaccompanied Minor Lounge</h2>
+        <div class="lounge__grid">
+            <div class="lounge__details">
+                <h4>Experience Tranquility</h4>
+                <p>
+                    Serenity Haven offers a tranquil escape, featuring comfortable
+                    seating, calming ambiance, and attentive service.
+                </p>
+            </div>
+            <div class="lounge__details">
+                <h4>Elevate Your Experience</h4>
+                <p>
+                    Designed for discerning travelers, this exclusive lounge offers
+                    premium amenities, assistance, and private workspaces.
+                </p>
+            </div>
+            <div class="lounge__details">
+                <h4>A Welcoming Space</h4>
+                <p>
+                    Creating a family-friendly atmosphere, The Family Zone is the
+                    perfect haven for parents and children.
+                </p>
+            </div>
+            <div class="lounge__details">
+                <h4>A Culinary Delight</h4>
+                <p>
+                    Immerse yourself in a world of flavors, offering international
+                    cuisines, gourmet dishes, and carefully curated beverages.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section__container travellers__container">
+    <h2 class="section__header">Best travellers of the month</h2>
+    <div class="travellers__grid">
+        <div class="travellers__card">
+            <img src="assets/traveller-1.jpg" alt="traveller" />
+            <div class="travellers__card__content">
+                <img src="assets/client-1.jpg" alt="client" />
+                <h4>Emily Johnson</h4>
+                <p>Dubai</p>
+            </div>
+        </div>
+        <div class="travellers__card">
+            <img src="assets/traveller-2.jpg" alt="traveller" />
+            <div class="travellers__card__content">
+                <img src="assets/client-2.jpg" alt="client" />
+                <h4>David Smith</h4>
+                <p>Paris</p>
+            </div>
+        </div>
+        <div class="travellers__card">
+            <img src="assets/traveller-3.jpg" alt="traveller" />
+            <div class="travellers__card__content">
+                <img src="assets/client-3.jpg" alt="client" />
+                <h4>Olivia Brown</h4>
+                <p>Singapore</p>
+            </div>
+        </div>
+        <div class="travellers__card">
+            <img src="assets/traveller-4.jpg" alt="traveller" />
+            <div class="travellers__card__content">
+                <img src="assets/client-4.jpg" alt="client" />
+                <h4>Daniel Taylor</h4>
+                <p>Malaysia</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Start of LiveChat (www.livechat.com) code -->
+<script>
+    window.__lc = window.__lc || {};
+    window.__lc.license = 18131898;
+    window.__lc.integration_name = "manual_channels";
+    window.__lc.product_name = "livechat";
+    ; (function (n, t, c) { function i(n) { return e._h ? e._h.apply(null, n) : e._q.push(n) } var e = { _q: [], _h: null, _v: "2.0", on: function () { i(["on", c.call(arguments)]) }, once: function () { i(["once", c.call(arguments)]) }, off: function () { i(["off", c.call(arguments)]) }, get: function () { if (!e._h) throw new Error("[LiveChatWidget] You can't use getters before load."); return i(["get", c.call(arguments)]) }, call: function () { i(["call", c.call(arguments)]) }, init: function () { var n = t.createElement("script"); n.async = !0, n.type = "text/javascript", n.src = "https://cdn.livechatinc.com/tracking.js", t.head.appendChild(n) } }; !n.__lc.asyncInit && e.init(), n.LiveChatWidget = n.LiveChatWidget || e }(window, document, [].slice))
+</script>
+<noscript><a href="https://www.livechat.com/chat-with/18131898/" rel="nofollow">Chat with us</a>, powered by <a href="https://www.livechat.com/?welcome" rel="noopener nofollow" target="_blank">LiveChat</a></noscript>
+<!-- End of LiveChat code -->
